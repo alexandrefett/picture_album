@@ -24,12 +24,12 @@ class _FotoFormState extends State<FotoFormPage> {
   Blob image;
 
   User user;
-  List<Widget> actions=[LoginButton()];
+  List<Widget> actions = [LoginButton()];
 
   @override
   void initState() {
     user = authService.currentUser();
-    authService.onAuthStateChanged().listen((onData){
+    authService.onAuthStateChanged().listen((onData) {
       setState(() {
         user = onData;
       });
@@ -41,9 +41,7 @@ class _FotoFormState extends State<FotoFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarAlbum(
-            actions: actions
-        ),
+        appBar: AppBarAlbum(actions: actions),
         body: Container(
             child: Center(
                 child: Align(
@@ -62,22 +60,21 @@ class _FotoFormState extends State<FotoFormPage> {
                               Form(
                                   key: _formKey,
                                   child: Column(children: <Widget>[
-                                    UploadWidget(
-                                        onPressed: (onValue){
-                                          image = onValue;
-                                        }
-                                    ),
+                                    UploadWidget(onPressed: (onValue) {
+                                      image = onValue;
+                                    }),
                                     AlbumButton(
-                                      text: 'Avançar',
-                                      onPressed: () {
-                                          if(_formKey.currentState.validate()) {
+                                        text: 'Avançar',
+                                        onPressed: () {
+                                          if (_formKey.currentState
+                                              .validate()) {
                                             _formKey.currentState.save();
                                             fireService
-                                                .addFoto(widget.catid, widget.hotelid, image)
+                                                .addFoto(widget.catid,
+                                                    widget.hotelid, image)
                                                 .then((onValue) {
-                                                   Navigator.pop(context);
-                                                }
-                                                );
+                                              Navigator.pop(context);
+                                            });
                                           }
                                         })
                                   ])),

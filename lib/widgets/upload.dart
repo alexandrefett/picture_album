@@ -14,13 +14,11 @@ class UploadWidget extends StatefulWidget {
 }
 
 class _UploadWidget extends State<UploadWidget> {
-
   String filename;
   html.Blob blob;
 
-
   @override
-  void initState(){
+  void initState() {
     filename = 'nenhum';
     super.initState();
   }
@@ -49,15 +47,18 @@ class _UploadWidget extends State<UploadWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8),color: Colors.indigo),
-      child: Row(
-      children: <Widget>[
-        AlbumButton(
-            text: 'Arquivo',
-            onPressed: () => getFile().then((onValue)=> widget.onPressed(onValue))
-        ),
-        Text(filename,overflow: TextOverflow.fade,style: TextStyle(color: Colors.white),)
-    ]));
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8), color: Colors.indigo),
+        child: Row(children: <Widget>[
+          AlbumButton(
+              text: 'Arquivo',
+              onPressed: () =>
+                  getFile().then((onValue) => widget.onPressed(onValue))),
+          Text(
+            filename,
+            overflow: TextOverflow.fade,
+            style: TextStyle(color: Colors.white),
+          )
+        ]));
   }
-
 }

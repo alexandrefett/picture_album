@@ -6,6 +6,9 @@ import 'package:picture_album/login.dart';
 import 'package:picture_album/auth.dart';
 import 'package:picture_album/hotelform.dart';
 
+// teste
+// alteracao
+
 class LoginButton extends StatefulWidget {
   LoginButton({Key key, this.title}) : super(key: key);
   final String title;
@@ -15,13 +18,12 @@ class LoginButton extends StatefulWidget {
 }
 
 class _LoginButton extends State<LoginButton> {
-
   User user;
 
   @override
   void initState() {
     user = authService.currentUser();
-    authService.onAuthStateChanged().listen((onData){
+    authService.onAuthStateChanged().listen((onData) {
       setState(() {
         user = onData;
       });
@@ -31,25 +33,21 @@ class _LoginButton extends State<LoginButton> {
 
   @override
   Widget build(BuildContext context) {
-     return user != null ?
-        Tooltip(
+    return user != null
+        ? Tooltip(
             message: 'Encerrar sessão',
             child: FlatButton(
-              child: Text(user.email,style: TextStyle(color: Colors.white)),
+              child: Text(user.email, style: TextStyle(color: Colors.white)),
               onPressed: () async => authService.signOut(),
-          )
-        )
-        :
-        FlatButton(
-          child: Text('Entrar',style: TextStyle(color: Colors.white)),
-          onPressed: () async => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => LoginPage(title: widget.title))
-          )
-        );
+            ))
+        : FlatButton(
+            child: Text('Entrar', style: TextStyle(color: Colors.white)),
+            onPressed: () async => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LoginPage(title: widget.title))));
   }
 }
-
 
 class HotelButton extends StatefulWidget {
   HotelButton({Key key, this.title}) : super(key: key);
@@ -60,16 +58,12 @@ class HotelButton extends StatefulWidget {
 }
 
 class _HotelButton extends State<HotelButton> {
-
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-        child: Text('novo hotel',style: TextStyle(color: Colors.white)),
-        onPressed:  () async => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => HotelFormPage())
-        )
-    );
+        child: Text('novo hotel', style: TextStyle(color: Colors.white)),
+        onPressed: () async => Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HotelFormPage())));
   }
 }
 
@@ -83,16 +77,17 @@ class FotoButton extends StatefulWidget {
 }
 
 class _FotoButton extends State<FotoButton> {
-
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-        child: Text('nova foto',style: TextStyle(color: Colors.white)),
-        onPressed:  () async => Navigator.push(
+        child: Text('nova foto', style: TextStyle(color: Colors.white)),
+        onPressed: () async => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => FotoFormPage(hotelid: widget.hotelid,catid: widget.catid,))
-        )
-    );
+            MaterialPageRoute(
+                builder: (context) => FotoFormPage(
+                      hotelid: widget.hotelid,
+                      catid: widget.catid,
+                    ))));
   }
 }
 
@@ -106,16 +101,14 @@ class CatButton extends StatefulWidget {
 }
 
 class _CatButton extends State<CatButton> {
-
   @override
   Widget build(BuildContext context) {
     return FlatButton(
-        child: Text('nova categoria',style: TextStyle(color: Colors.white)),
-        onPressed:  () async => Navigator.push(
+        child: Text('nova categoria', style: TextStyle(color: Colors.white)),
+        onPressed: () async => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CatFormPage(hotelid: widget.hotelid))
-        )
-    );
+            MaterialPageRoute(
+                builder: (context) => CatFormPage(hotelid: widget.hotelid))));
   }
 }
 
@@ -140,33 +133,34 @@ class AppBarAlbum extends AppBar {
     this.titleSpacing = NavigationToolbar.kMiddleSpacing,
     this.toolbarOpacity = 1.0,
     this.bottomOpacity = 1.0,
-  }) : assert(automaticallyImplyLeading != null),
+  })  : assert(automaticallyImplyLeading != null),
         assert(elevation == null || elevation >= 0.0),
         assert(primary != null),
         assert(titleSpacing != null),
         assert(toolbarOpacity != null),
         assert(bottomOpacity != null),
-        preferredSize = Size.fromHeight(kToolbarHeight + (bottom?.preferredSize?.height ?? 0.0)),
-        super(key: key,
-        title:title,
-        actions:actions,
-        backgroundColor:backgroundColor,
-        leading:leading,
-        automaticallyImplyLeading:automaticallyImplyLeading,
-        actionsIconTheme:actionsIconTheme,
-        bottom:bottom,
-        elevation:elevation,
-        shape:shape,
-        bottomOpacity:bottomOpacity,
-        brightness:brightness,
-        iconTheme:iconTheme,
-        textTheme:textTheme,
-        primary:primary,
-        centerTitle:centerTitle,
-        titleSpacing:titleSpacing,
-        toolbarOpacity:toolbarOpacity,
-        flexibleSpace:flexibleSpace
-      );
+        preferredSize = Size.fromHeight(
+            kToolbarHeight + (bottom?.preferredSize?.height ?? 0.0)),
+        super(
+            key: key,
+            title: title,
+            actions: actions,
+            backgroundColor: backgroundColor,
+            leading: leading,
+            automaticallyImplyLeading: automaticallyImplyLeading,
+            actionsIconTheme: actionsIconTheme,
+            bottom: bottom,
+            elevation: elevation,
+            shape: shape,
+            bottomOpacity: bottomOpacity,
+            brightness: brightness,
+            iconTheme: iconTheme,
+            textTheme: textTheme,
+            primary: primary,
+            centerTitle: centerTitle,
+            titleSpacing: titleSpacing,
+            toolbarOpacity: toolbarOpacity,
+            flexibleSpace: flexibleSpace);
 
   final Widget leading;
   final bool automaticallyImplyLeading;

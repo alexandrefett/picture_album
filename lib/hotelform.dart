@@ -26,12 +26,12 @@ class _HotelFormState extends State<HotelFormPage> {
   Blob image;
 
   User user;
-  List<Widget> actions=[LoginButton()];
+  List<Widget> actions = [LoginButton()];
 
   @override
   void initState() {
     user = authService.currentUser();
-    authService.onAuthStateChanged().listen((onData){
+    authService.onAuthStateChanged().listen((onData) {
       setState(() {
         user = onData;
       });
@@ -43,9 +43,7 @@ class _HotelFormState extends State<HotelFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarAlbum(
-            actions: actions
-        ),
+        appBar: AppBarAlbum(actions: actions),
         body: Container(
             child: Center(
                 child: Align(
@@ -62,7 +60,6 @@ class _HotelFormState extends State<HotelFormPage> {
                               ),
                               Divider(height: 25),
                               Form(
-
                                   key: _formKey,
                                   child: Column(children: <Widget>[
                                     TextFormField(
@@ -107,15 +104,14 @@ class _HotelFormState extends State<HotelFormPage> {
                                         onSaved: (value) {
                                           descricao = value.toString();
                                         }),
-                                    UploadWidget(
-                                        onPressed: (onValue){
-                                          image = onValue;
-                                        }
-                                    ),
+                                    UploadWidget(onPressed: (onValue) {
+                                      image = onValue;
+                                    }),
                                     AlbumButton(
-                                      text: 'Avançar',
-                                      onPressed: () {
-                                          if(_formKey.currentState.validate()) {
+                                        text: 'Avançar',
+                                        onPressed: () {
+                                          if (_formKey.currentState
+                                              .validate()) {
                                             _formKey.currentState.save();
                                             Hotel hotel = Hotel(
                                                 nome: nome,
@@ -123,9 +119,8 @@ class _HotelFormState extends State<HotelFormPage> {
                                             fireService
                                                 .addHotel(hotel, image)
                                                 .then((onValue) {
-                                                   Navigator.pop(context);
-                                                }
-                                                );
+                                              Navigator.pop(context);
+                                            });
                                           }
                                         })
                                   ])),

@@ -8,6 +8,8 @@ import 'package:picture_album/widgets/widgets.dart';
 import 'package:picture_album/model.dart';
 import 'package:picture_album/widgets/upload.dart';
 
+
+// alteracao
 class CatFormPage extends StatefulWidget {
   CatFormPage({Key key, this.title, this.hotelid}) : super(key: key);
   final String title;
@@ -26,12 +28,12 @@ class _CatFormState extends State<CatFormPage> {
   Blob image;
 
   User user;
-  List<Widget> actions=[LoginButton()];
+  List<Widget> actions = [LoginButton()];
 
   @override
   void initState() {
     user = authService.currentUser();
-    authService.onAuthStateChanged().listen((onData){
+    authService.onAuthStateChanged().listen((onData) {
       setState(() {
         user = onData;
       });
@@ -43,9 +45,7 @@ class _CatFormState extends State<CatFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarAlbum(
-            actions: actions
-        ),
+        appBar: AppBarAlbum(actions: actions),
         body: Container(
             child: Center(
                 child: Align(
@@ -62,7 +62,6 @@ class _CatFormState extends State<CatFormPage> {
                               ),
                               Divider(height: 25),
                               Form(
-
                                   key: _formKey,
                                   child: Column(children: <Widget>[
                                     TextFormField(
@@ -85,23 +84,23 @@ class _CatFormState extends State<CatFormPage> {
                                         onSaved: (value) {
                                           nome = value.toString();
                                         }),
-                                    UploadWidget(
-                                        onPressed: (onValue){
-                                          image = onValue;
-                                        }
-                                    ),
+                                    UploadWidget(onPressed: (onValue) {
+                                      image = onValue;
+                                    }),
                                     AlbumButton(
-                                      text: 'Avançar',
-                                      onPressed: () {
-                                          if(_formKey.currentState.validate()) {
+                                        text: 'Avançar',
+                                        onPressed: () {
+                                          if (_formKey.currentState
+                                              .validate()) {
                                             _formKey.currentState.save();
-                                            Categoria cat = Categoria(categoria: nome);
+                                            Categoria cat =
+                                                Categoria(categoria: nome);
                                             fireService
-                                                .addCat(cat, widget.hotelid, image)
+                                                .addCat(
+                                                    cat, widget.hotelid, image)
                                                 .then((onValue) {
-                                                   Navigator.pop(context);
-                                                }
-                                                );
+                                              Navigator.pop(context);
+                                            });
                                           }
                                         })
                                   ])),

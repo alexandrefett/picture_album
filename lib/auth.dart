@@ -9,12 +9,11 @@ abstract class BaseAuth {
   Future<void> signOut();
 }
 
-class AuthService implements BaseAuth{
-
+class AuthService implements BaseAuth {
   Auth _firebaseAuth;
   User user;
 
-  AuthService(){
+  AuthService() {
     initializeApp(
         apiKey: 'AIzaSyCfD19geKC_N5ZsnL8-zk9og9zUhUOhK58',
         authDomain: 'digitalsignage-a824c.firebaseapp.com',
@@ -37,19 +36,21 @@ class AuthService implements BaseAuth{
   }
 
   @override
-  Future<User> createUserWithEmailAndPassword(String email, String password) async {
-    return (await _firebaseAuth.createUserWithEmailAndPassword(email, password)).user;
+  Future<User> createUserWithEmailAndPassword(
+      String email, String password) async {
+    return (await _firebaseAuth.createUserWithEmailAndPassword(email, password))
+        .user;
   }
 
   @override
   Future<User> signInWithEmailAndPassword(String email, String password) async {
-    return (await _firebaseAuth.signInWithEmailAndPassword(email, password)).user;
+    return (await _firebaseAuth.signInWithEmailAndPassword(email, password))
+        .user;
   }
 
-  Future signOut(){
+  Future signOut() {
     return _firebaseAuth.signOut();
   }
 }
 
 final AuthService authService = AuthService();
-
