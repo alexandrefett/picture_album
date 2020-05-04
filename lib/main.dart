@@ -9,7 +9,6 @@ import 'package:picture_album/widgets/widgets.dart';
 import 'package:picture_album/categorias.dart';
 
 void main() {
-
   runApp(MyApp());
 }
 
@@ -24,7 +23,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.indigo,
         primaryColor: Colors.indigo,
         buttonColor: Colors.indigo,
-
       ),
       home: MyHomePage(title: 'Hotéis Everest'),
     );
@@ -40,92 +38,91 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   User user;
-  List<Widget> actions=[];
+  List<Widget> actions = [];
 
   @override
   void initState() {
     user = authService.currentUser();
-    if(user!=null)
+    if (user != null)
       actions = [HotelButton(), LoginButton()];
     else
       actions = [LoginButton()];
-    authService.onAuthStateChanged().listen((onData){
+    authService.onAuthStateChanged().listen((onData) {
       setState(() {
         user = onData;
-        if(user!=null)
+        if (user != null)
           actions = [HotelButton(), LoginButton()];
         else
           actions = [LoginButton()];
       });
     });
-    
+
     super.initState();
   }
 
-  Widget hotelItem(Hotel hotel){
+  Widget hotelItem(Hotel hotel) {
     return Container(
-      width: 200,
+        width: 200,
         child: Column(
           children: <Widget>[
-            user!=null ?
-            Container(
-                alignment: Alignment.centerRight,
-                child: IconButton(
-                    icon: Icon(Icons.delete_forever),
-                    onPressed:  () => fireService.deleteHotel(hotel.id)
-                )
-            )
+            user != null
+                ? Container(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                        icon: Icon(Icons.delete_forever),
+                        onPressed: () => fireService.deleteHotel(hotel.id)))
                 : Container(),
             FlatButton(
                 padding: EdgeInsets.all(5),
                 hoverColor: Colors.blueGrey,
-                onPressed:  () async => Navigator.push(
+                onPressed: () async => Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CatPage(hotelid: hotel.id))
-                ),
+                    MaterialPageRoute(
+                        builder: (context) => CatPage(hotelid: hotel.id))),
                 child: Column(
                   children: <Widget>[
                     ClipRRect(
                         borderRadius: new BorderRadius.circular(8.0),
-                        child:Image.network(
+                        child: Image.network(
                           hotel.imageUrl,
                           fit: BoxFit.fitHeight,
-                        )
-                    ),
-                    Text(hotel.nome,style: TextStyle(fontSize: 18)),
-                  ],))
-          ],)
-    );
+                        )),
+                    Text(hotel.nome, style: TextStyle(fontSize: 18)),
+                  ],
+                ))
+          ],
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBarAlbum(
-          actions: actions
-      ),
-      body: Container(alignment: Alignment.topCenter,
-          child: StreamBuilder<QuerySnapshot>(
-              stream: fireService.getHoteis(),
-              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> event) {
-                if(event.data != null) {
-                  if (!event.data.empty) {
-                    return Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      alignment: WrapAlignment.center,
-                      spacing: 20,
-                      children: event.data.docs.map((data) => hotelItem(Hotel.fromJson(data.data()))).toList());
-
+        appBar: AppBarAlbum(actions: actions),
+        body: Container(
+            alignment: Alignment.topCenter,
+            child: StreamBuilder<QuerySnapshot>(
+                stream: fireService.getHoteis(),
+                builder:
+                    (BuildContext context, AsyncSnapshot<QuerySnapshot> event) {
+                  if (event.data != null) {
+                    if (!event.data.empty) {
+                      return Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.start,
+                          alignment: WrapAlignment.center,
+                          spacing: 20,
+                          children: event.data.docs
+                              .map((data) =>
+                                  hotelItem(Hotel.fromJson(data.data())))
+                              .toList());
+                    } else {
+                      return Center(
+                        child: Text('Sem dados'),
+                      );
+                    }
                   } else {
-                    return Center(child: Text('Sem dados'),);
+                    return Center(child: CircularProgressIndicator());
                   }
-                }else{
-                  return Center(child: CircularProgressIndicator());
-
-                }
-              })));
+                })));
   }
 }

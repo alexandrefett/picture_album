@@ -19,12 +19,12 @@ class _LoginPageState extends State<LoginPage> {
   bool waiting = false;
 
   User user;
-  List<Widget> actions=[LoginButton()];
+  List<Widget> actions = [LoginButton()];
 
   @override
   void initState() {
     user = authService.currentUser();
-    authService.onAuthStateChanged().listen((onData){
+    authService.onAuthStateChanged().listen((onData) {
       setState(() {
         user = onData;
       });
@@ -36,9 +36,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarAlbum(
-            actions: actions
-        ),
+        appBar: AppBarAlbum(actions: actions),
         body: Container(
             child: Center(
                 child: Align(
@@ -55,7 +53,6 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               Divider(height: 25),
                               Form(
-
                                   key: _formKey,
                                   child: Column(children: <Widget>[
                                     TextFormField(
@@ -107,17 +104,18 @@ class _LoginPageState extends State<LoginPage> {
                                         minWidth: 100.0,
                                         child: Text('Entrar'),
                                         onPressed: () {
-                                          if(_formKey.currentState.validate()) {
+                                          if (_formKey.currentState
+                                              .validate()) {
                                             _formKey.currentState.save();
                                             print(email);
                                             print(password);
                                             authService
-                                                .signInWithEmailAndPassword(email, password)
+                                                .signInWithEmailAndPassword(
+                                                    email, password)
                                                 .then((onValue) {
-                                                   print(onValue.email);
-                                                   Navigator.pop(context);
-                                                }
-                                                );
+                                              print(onValue.email);
+                                              Navigator.pop(context);
+                                            });
                                           }
                                         })
                                   ])),
